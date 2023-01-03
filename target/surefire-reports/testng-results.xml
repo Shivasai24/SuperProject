@@ -2,12 +2,12 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2023-01-02T16:45:47 IST" name="SuperProject" finished-at="2023-01-02T16:46:37 IST" duration-ms="50665">
+  <suite started-at="2023-01-02T18:39:01 IST" name="SuperProject" finished-at="2023-01-02T18:39:45 IST" duration-ms="44201">
     <groups>
     </groups>
-    <test started-at="2023-01-02T16:45:47 IST" name="Super Project Tests" finished-at="2023-01-02T16:46:37 IST" duration-ms="50665">
+    <test started-at="2023-01-02T18:39:01 IST" name="Super Project Tests" finished-at="2023-01-02T18:39:45 IST" duration-ms="44201">
       <class name="Tests.TestScenario2">
-        <test-method is-config="true" signature="setup(java.lang.String)[pri:0, instance:Tests.TestScenario2@359f7cdf]" started-at="2023-01-02T16:45:47 IST" name="setup" finished-at="2023-01-02T16:46:23 IST" duration-ms="36298" status="PASS">
+        <test-method is-config="true" signature="setup(java.lang.String)[pri:0, instance:Tests.TestScenario2@359f7cdf]" started-at="2023-01-02T18:39:01 IST" name="setup" finished-at="2023-01-02T18:39:36 IST" duration-ms="35294" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -18,11 +18,11 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method signature="Logout()[pri:0, instance:Tests.TestScenario2@359f7cdf]" started-at="2023-01-02T16:46:23 IST" name="Logout" finished-at="2023-01-02T16:46:35 IST" duration-ms="12330" status="PASS">
+        <test-method signature="Logout()[pri:0, instance:Tests.TestScenario2@359f7cdf]" started-at="2023-01-02T18:39:36 IST" name="Logout" finished-at="2023-01-02T18:39:43 IST" duration-ms="6986" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Logout -->
-        <test-method is-config="true" signature="captureScreenShot(org.testng.ITestResult,java.lang.reflect.Method,org.testng.ITestContext)[pri:0, instance:Tests.TestScenario2@359f7cdf]" started-at="2023-01-02T16:46:35 IST" name="captureScreenShot" finished-at="2023-01-02T16:46:35 IST" duration-ms="9" status="PASS">
+        <test-method is-config="true" signature="captureScreenShot(org.testng.ITestResult,java.lang.reflect.Method,org.testng.ITestContext)[pri:0, instance:Tests.TestScenario2@359f7cdf]" started-at="2023-01-02T18:39:43 IST" name="captureScreenShot" finished-at="2023-01-02T18:39:43 IST" duration-ms="8" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -43,7 +43,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- captureScreenShot -->
-        <test-method is-config="true" signature="teardown()[pri:0, instance:Tests.TestScenario2@359f7cdf]" started-at="2023-01-02T16:46:35 IST" name="teardown" finished-at="2023-01-02T16:46:37 IST" duration-ms="1960" status="PASS">
+        <test-method is-config="true" signature="teardown()[pri:0, instance:Tests.TestScenario2@359f7cdf]" started-at="2023-01-02T18:39:43 IST" name="teardown" finished-at="2023-01-02T18:39:45 IST" duration-ms="1832" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- teardown -->

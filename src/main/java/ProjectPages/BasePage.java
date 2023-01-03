@@ -1,73 +1,45 @@
 package ProjectPages;
 
 
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.ITestContext;
-import org.testng.ITestResult;
-import org.testng.annotations.*;
-import utilities.ReadConfig;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BasePage {
+    protected WebDriver driver ;
 
-    ReadConfig rc=new ReadConfig();
-    public String baseurl= rc.getApplicationURL();
-    public String username=rc.getUserName();
-    public String password=rc.getPassword();
-    public static WebDriver driver;
 
-    @Parameters("browser")
-    @BeforeTest
-    public void setup(String br) {
-    if (br.equals("chrome")) {
-        System.setProperty("webdriver.chrome.driver", rc.getChromePath());
-        driver = new ChromeDriver();
-    } else if (br.equals("firefox")) {
-        System.setProperty("webdriver.gecko.driver",rc.getFirefoxPath());
-        driver = new FirefoxDriver();
-
+    protected void jsClick(WebElement element) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
     }
-    driver.get(baseurl);
-    driver.manage().window().maximize();
-
-}
-    @AfterMethod(alwaysRun = true)
-    public void captureScreenShot(ITestResult result, java.lang.reflect.Method methodname, ITestContext context){
-        if (result.getStatus() == ITestResult.FAILURE) {
-            getScreenshot(driver,result.getMethod().getMethodName() );
+    protected void scrollToView(WebElement element) {
+        if (element.isEnabled()) {
+            ((JavascriptExecutor) driver).
+                    executeScript("arguments[0].scrollIntoView(true);", element);
         }
+
     }
-    public static String getScreenshot(WebDriver driver, String screenshotName) {
-        String destination = null;
+    public boolean isElementVisible(WebElement element){
+        boolean flag = false;
         try {
-            String dateName = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
-            TakesScreenshot ts = (TakesScreenshot) driver;
-            File source = ts.getScreenshotAs(OutputType.FILE);
-            destination = System.getProperty("user.dir") + "/target/Screenshots/" + screenshotName+"_"+dateName + ".png";
-            File finalDestination = new File(destination);
-            FileUtils.copyFile(source, finalDestination);
-        }catch (IOException e){
-            e.printStackTrace();
+            flag= element.isEnabled()&&element.isDisplayed();
+        }catch (Exception e){
+            flag= element.isEnabled()&&element.isDisplayed();
         }finally {
-            return destination;
+            return flag;
+        }
+    }
+    protected void wait(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
-    @AfterTest
-    public void teardown(){
-        driver.quit();
-
-    }
 
 
 }
