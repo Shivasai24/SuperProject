@@ -6,6 +6,7 @@ import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -13,6 +14,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
+import org.testng.TestListenerAdapter;
 import org.testng.annotations.*;
 import utilities.ReadConfig;
 
@@ -20,9 +22,10 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Logger;
 
 
-public class TestBase {
+public class TestBase extends TestListenerAdapter {
 
     ReadConfig rc=new ReadConfig();
     public String baseurl= rc.getApplicationURL();
@@ -31,7 +34,9 @@ public class TestBase {
     public static WebDriver driver;
     public static ExtentHtmlReporter htmlReporter;
     public static ExtentReports extent;
-    public static ExtentTest logger;
+    public static ExtentTest test;
+
+    public static Logger logger;
     @BeforeSuite
     public void beforeSuite() {
         createFolderExtendReport();
@@ -60,7 +65,7 @@ public class TestBase {
     @BeforeMethod(alwaysRun = true)
     public void beforeMethod(ITestResult result, java.lang.reflect.Method methodName) {
         //Extend Report
-        logger = extent.createTest(methodName.getName()); // create new entry in the report
+        test = extent.createTest(methodName.getName()); // create new entry in the report
     }
     @Parameters("browser")
     @BeforeMethod(alwaysRun = true)
@@ -74,6 +79,9 @@ public class TestBase {
         }
         driver.get(baseurl);
         driver.manage().window().maximize();
+
+        logger=Logger.getLogger("Superproject");
+        PropertyConfigurator.configure("log4j.properties");
     }
     @AfterMethod(alwaysRun = true)
     public void captureScreenShot(ITestResult result, java.lang.reflect.Method methodname, ITestContext context){
