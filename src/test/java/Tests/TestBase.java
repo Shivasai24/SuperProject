@@ -5,6 +5,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.OutputType;
@@ -12,9 +13,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.ITestContext;
-import org.testng.ITestResult;
-import org.testng.TestListenerAdapter;
+import org.testng.*;
 import org.testng.annotations.*;
 import utilities.ReadConfig;
 
@@ -34,9 +33,7 @@ public class TestBase extends TestListenerAdapter {
     public static WebDriver driver;
     public static ExtentHtmlReporter htmlReporter;
     public static ExtentReports extent;
-    public static ExtentTest test;
-
-    public static Logger logger;
+    public static ExtentTest logger;
     @BeforeSuite
     public void beforeSuite() {
         createFolderExtendReport();
@@ -45,15 +42,15 @@ public class TestBase extends TestListenerAdapter {
         htmlReporter.loadXMLConfig(System.getProperty("user.dir") + "/extent-config.xml");
         extent = new ExtentReports();
         extent.attachReporter(htmlReporter);
-        extent.setSystemInfo("Host name", "QA");
-        extent.setSystemInfo("Environment", System.getProperty("env"));
-        htmlReporter.config().setDocumentTitle("Super Automation report"); // Tile of report
-        htmlReporter.config().setReportName("Super Automation report"); // name of the report
-        htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP); // location of the chart
-        htmlReporter.config().setTheme(Theme.STANDARD);
-
+        extent.setSystemInfo("Host name", "Shiva");
+        extent.setSystemInfo("Environment", "QA".toString());
+        htmlReporter.config().setChartVisibilityOnOpen(true);
+        htmlReporter.config().setDocumentTitle("Super Automation report");
+        htmlReporter.config().setReportName("Super Automation report");
+        htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
+        htmlReporter.config().setTheme(Theme.DARK);
     }
-    public void createFolderExtendReport() {
+       public void createFolderExtendReport() {
         try {
             File file = new File(System.getProperty("user.dir") + "/" + "ExtendReport");
             file.mkdir();
@@ -64,24 +61,23 @@ public class TestBase extends TestListenerAdapter {
     }
     @BeforeMethod(alwaysRun = true)
     public void beforeMethod(ITestResult result, java.lang.reflect.Method methodName) {
-        //Extend Report
-        test = extent.createTest(methodName.getName()); // create new entry in the report
+        logger = extent.createTest(methodName.getName());
     }
     @Parameters("browser")
     @BeforeMethod(alwaysRun = true)
     public void setup(String br) {
         if (br.equals("chrome")) {
             System.setProperty("webdriver.chrome.driver", rc.getChromePath());
+            WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
         } else if (br.equals("firefox")) {
             System.setProperty("webdriver.gecko.driver",rc.getFirefoxPath());
+            WebDriverManager.firefoxdriver().setup();
             driver = new FirefoxDriver();
         }
         driver.get(baseurl);
         driver.manage().window().maximize();
 
-        logger=Logger.getLogger("Superproject");
-        PropertyConfigurator.configure("log4j.properties");
     }
     @AfterMethod(alwaysRun = true)
     public void captureScreenShot(ITestResult result, java.lang.reflect.Method methodname, ITestContext context){

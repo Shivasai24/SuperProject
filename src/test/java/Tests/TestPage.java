@@ -12,7 +12,7 @@ public class TestPage extends TestBase {
     public void loginTest() {
 
         Login lp = new Login(driver);
-        logger.info("Opening the URL");
+      logger.info("Opening the URL");
         lp.setName(username);
         logger.info("UserName Entered");
         lp.setPassword(password);
